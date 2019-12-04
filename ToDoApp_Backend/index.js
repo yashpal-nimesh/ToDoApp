@@ -73,6 +73,19 @@ db.collection("Users").update(
 });
 
 
+app.post('/UpdateDetails',function(req,res){
+    console.log(req.body)
+    let data=Object.keys(req.body);
+    // console.log(JSON.parse(data[0]))
+    let x=JSON.parse(data[0]);
+    console.log(x)
+
+db.collection("Users").update(
+    { token: x.token , "Topics.Topic_Id": x.Topic_id },
+    { $set: { "Topics.$.Topic_Details" : x.Topic_Details } }
+ )
+});
+
 
 app.post('/AddUsers',function(req,res){
 // console.log(req.body)

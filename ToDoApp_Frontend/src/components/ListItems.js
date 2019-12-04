@@ -10,23 +10,42 @@ import {
 import { connect } from 'react-redux';
 import {RefreshToDo } from '../actions/ToDoAction';
 
-
-
 class ListItems extends PureComponent {
-    state = {TopicId : "" }
+    state = {TopicId : "",value : "" }
 
 componentDidMount(){
   this.setState({TopicId:this.props.id})
   console.log("listitem")
 }
+handleChange=(id,e)=>{
+  // console.log(id,e.target.value);
+  let buttonId=id+id;
+  this.setState({value:e.target.value})
+  document.getElementById(buttonId).className="btn btn-success";
+
+}
+
+handleClick=()=>{
+// console.log(this.state.value);
+let id=this.state.TopicId;
+let buttonId=id+id;
+this.props.UpdateDetails(this.state.TopicId,this.state.value);
+document.getElementById(buttonId).className="d-none";
+
+
+}
     render() { 
         return ( 
           <div className="my-3 ">
-    <Link to="/details" id={this.state.TopicId} className="list-group-item w-50" style={{width:"20%"}}>{this.props.data}
-     </Link>
-         <button className="btn btn-success" id={this.state.TopicId+this.state.TopicId} style={{width:"10%"}} onClick={this.props.EditItem.bind(this,this.state.TopicId,this.props.data)} >edit</button>
-         <button className="btn btn-danger" onClick={this.props.DeleteItem.bind(this,this.state.TopicId)} style={{width:"10%"}}>delete</button>
-
+    <h1 className="list-group-item w-50 text-center" style={{width:"20%"}}>{this.props.data}
+     </h1>
+    <textarea defaultValue={this.props.details} onChange={this.handleChange.bind(this,this.state.TopicId)} class="form-control my-2 w-50 d-inline"id={this.state.TopicId}  rows="5"></textarea>
+    <button type="button" id={this.state.TopicId+this.state.TopicId} 
+     class="btn btn-success d-none" onClick={this.handleClick}>save</button>
+    <div>
+<button className="btn btn-success d-inline"  style={{width:"10%"}} onClick={this.props.EditItem.bind(this,this.state.TopicId,this.props.data)} >edit</button>
+<button className="btn btn-danger d-inline" onClick={this.props.DeleteItem.bind(this,this.state.TopicId)} style={{width:"10%"}}>delete</button>
+</div>
         
          </div>
 
@@ -37,6 +56,36 @@ componentDidMount(){
   
  function mapActionToProps(dispatch) {
   return {
+
+    UpdateDetails: function(id,value) {
+console.log(id,value)
+
+//       console.log(id);
+      let x=JSON.parse(localStorage.getItem("user"));
+      let y=x.token;
+        let data={Topic_id : id,token :y,Topic_Details : value}
+        fetch('http://localhost:9000/UpdateDetails', {
+
+headers: {
+  'Content-Type': 'application/x-www-form-urlencoded'
+},
+method: 'post',
+body:JSON.stringify(data)
+});
+
+     
+// fetch('http://localhost:9000/ShowTopics', {
+// headers: {
+//   'Content-Type': 'application/x-www-form-urlencoded'
+// },
+// method: 'post',
+// body: localStorage.getItem('user')
+// })
+// .then(res=>res.json())
+// .then(x=> dispatch(RefreshToDo(x)))
+
+
+    },
       DeleteItem: function(id) {
         console.log(id);
         let x=JSON.parse(localStorage.getItem("user"));

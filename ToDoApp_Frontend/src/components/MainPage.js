@@ -68,7 +68,7 @@ class MainPage extends PureComponent {
     console.log(this.props.item)
         const myArray = this.props.item;
         let elements=  [...myArray].reverse().map((item,index)=>
-        <ListItems  key={item.Topic_Id} id={item.Topic_Id} data={item.Topic_Name} /> );
+        <ListItems  key={item.Topic_Id} id={item.Topic_Id} data={item.Topic_Name} details={item.Topic_Details} /> );
 
             // console.log(listItems)
         console.log(this.state.result)
