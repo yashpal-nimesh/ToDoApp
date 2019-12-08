@@ -13,8 +13,7 @@ mongoClient.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017',funct
     if(err) throw err;
     db=client.db('ToDoApp');
 });
-// let x=require('../ToDoApp_Frontend/public/')
-// let x=path.join(__dirname+"/../"+'ToDoApp_Frontend','build','index.html')
+// let x=path.join(__dirname+'client','build','index.html')
 // console.log(x)
 
 // app.get('/ShowTopics',function(req,res){
@@ -141,10 +140,10 @@ else{
 });
 
 if(process.env.NODE_ENV==="production"){
-    app.use(express.static(__dirname+"/../"+'ToDoApp_Frontend','build'));
+    app.use(express.static('client/build'));
 
     app.get('*',(req,res)=>{
-        res.sendFile(path.join(__dirname+"/../"+'ToDoApp_Frontend','build','index.html'));
+        res.sendFile(path.join(__dirname+'client','build','index.html'));
     })
 
 }
