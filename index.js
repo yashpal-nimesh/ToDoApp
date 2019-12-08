@@ -8,11 +8,18 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 let mongoClient=require('mongodb').MongoClient;
+
+var url
+if (process.env.DB_URL) {
+    url = process.env.DB_URL
+} else {
+    url = 'mongodb://127.0.0.1:27017'
+}
 var db;
-mongoClient.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017',function(err,client){
-    if(err) throw err;
-    db=client.db('ToDoApp');
-});
+mongoClient.connect(url, function (err, client) {
+    if (err) throw err
+    db = client.db("ToDoApp")
+})
 // let x=path.join(__dirname+'client','build','index.html')
 // console.log(x)
 
