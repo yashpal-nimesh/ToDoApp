@@ -24,18 +24,9 @@ class MainPage extends PureComponent {
             },
             method: 'post',
             body: localStorage.getItem('user')
-           });
-
-        
-        fetch('http://localhost:9000/ShowTopics', {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            method: 'post',
-            body: localStorage.getItem('user')
            })
-        .then(res=>res.json())
-        .then(x=>(this.props.InitToDoData(x)))
+           .then(res=>res.json())
+           .then(x=>(this.props.InitToDoData(x)))
 
           }
     }
@@ -131,17 +122,9 @@ function mapActionToProps(dispatch) {
                 },
                 method: 'post',
                 body: data
-               });
-
-               fetch('http://localhost:9000/ShowTopics', {
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                method: 'post',
-                body: localStorage.getItem('user')
                })
-              .then(res=>res.json())
-              .then(x=>  dispatch(RefreshToDo(x)))
+                    .then(res=>res.json())
+              .then(x=> dispatch(RefreshToDo(x)))
            
             }
         }

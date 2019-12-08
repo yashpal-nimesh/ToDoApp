@@ -1,29 +1,38 @@
 let express=require('express');
 let app=express();
 let bodyParser=require('body-parser');
-var cors = require('cors')
+var cors = require('cors');
+const path=require('path');
 app.use(cors())
 app.use(bodyParser.urlencoded({
     extended: false
 }));
 let mongoClient=require('mongodb').MongoClient;
 var db;
-mongoClient.connect('mongodb://127.0.0.1:27017',function(err,client){
+mongoClient.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017',function(err,client){
     if(err) throw err;
     db=client.db('ToDoApp');
 });
+// let x=require('../ToDoApp_Frontend/public/')
+// let x=path.join(__dirname+"/../"+'ToDoApp_Frontend','build','index.html')
+// console.log(x)
 
-app.post('/ShowTopics',function(req,res){
-    console.log(req.body)
-    let data=Object.keys(req.body);
-    // console.log(JSON.parse(data[0]))
-    let x=JSON.parse(data[0]);
-console.log(x.token)
-    db.collection('Users').find( { token: x.token } ).toArray(function(err,result){
-        // console.log(result)
-        res.json(result[0].Topics);
-    })
-})
+// app.get('/ShowTopics',function(req,res){
+//     console.log(req.body)
+//     let data=Object.keys(req.body);
+//     // console.log(JSON.parse(data[0]))
+//     let x=JSON.parse(data[0]);
+// console.log(x.token)
+//     db.collection('Users').find( { token: x.token } ).toArray(function(err,result){
+//         if(result.length===0){
+//             let arr=[];
+//             res.json(arr)
+//         }
+//         else{
+//         res.json(result[0].Topics);
+//         }
+//     })
+// })
 app.post('/AddTopics',function(req,res){
     // console.log(req.body)
     let data=Object.keys(req.body);
@@ -41,9 +50,14 @@ db.collection("Users").update(
       }
     }
  )
+
+ db.collection('Users').find( { token: x.token } ).toArray(function(err,result){
+    // console.log(result)
+    res.json(result[0].Topics);
+})
 });
 
-app.post('/DeleteTopics',function(req,res){
+app.delete('/DeleteTopics',function(req,res){
     console.log(req.body)
     let data=Object.keys(req.body);
     // console.log(JSON.parse(data[0]))
@@ -56,10 +70,14 @@ db.collection("Users").update(
     { $pull: { Topics: { Topic_Id:x.Topic_id} } },
     { multi: true }
  )
+ db.collection('Users').find( { token: x.token } ).toArray(function(err,result){
+    // console.log(result)
+    res.json(result[0].Topics);
+})
 });
 
 
-app.post('/UpdateTopics',function(req,res){
+app.put('/UpdateTopics',function(req,res){
     // console.log(req.body)
     let data=Object.keys(req.body);
     // console.log(JSON.parse(data[0]))
@@ -70,10 +88,14 @@ db.collection("Users").update(
     { token: x.token , "Topics.Topic_Id": x.id },
     { $set: { "Topics.$.Topic_Name" : x.New_Name } }
  )
+ db.collection('Users').find( { token: x.token } ).toArray(function(err,result){
+    // console.log(result)
+    res.json(result[0].Topics);
+})
 });
 
 
-app.post('/UpdateDetails',function(req,res){
+app.put('/UpdateDetails',function(req,res){
     console.log(req.body)
     let data=Object.keys(req.body);
     // console.log(JSON.parse(data[0]))
@@ -84,6 +106,11 @@ db.collection("Users").update(
     { token: x.token , "Topics.Topic_Id": x.Topic_id },
     { $set: { "Topics.$.Topic_Details" : x.Topic_Details } }
  )
+
+ db.collection('Users').find( { token: x.token } ).toArray(function(err,result){
+    // console.log(result)
+    res.json(result[0].Topics);
+})
 });
 
 
@@ -104,12 +131,27 @@ if(result.length===0){
    });
 }
 else{
-    res.json(null)
-    // console.log("already")
+    db.collection('Users').find( { token: obj.token } ).toArray(function(err,result){
+        // console.log(result)
+        res.json(result[0].Topics);
+    })
 }
 })
 
 });
 
+if(process.env.NODE_ENV==="production"){
+    app.use(express.static(__dirname+"/../"+'ToDoApp_Frontend','build'));
 
-app.listen(9000);
+    app.get('*',(req,res)=>{
+        res.sendFile(path.join(__dirname+"/../"+'ToDoApp_Frontend','build','index.html'));
+    })
+
+}
+
+const port =process.env.PORT || 9000;
+
+
+
+
+app.listen(port);

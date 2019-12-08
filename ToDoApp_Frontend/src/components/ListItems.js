@@ -1,12 +1,4 @@
 import React, { PureComponent } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useRouteMatch
-} from "react-router-dom";
 import { connect } from 'react-redux';
 import {RefreshToDo } from '../actions/ToDoAction';
 
@@ -69,21 +61,11 @@ console.log(id,value)
 headers: {
   'Content-Type': 'application/x-www-form-urlencoded'
 },
-method: 'post',
+method: 'put',
 body:JSON.stringify(data)
-});
-
-     
-// fetch('http://localhost:9000/ShowTopics', {
-// headers: {
-//   'Content-Type': 'application/x-www-form-urlencoded'
-// },
-// method: 'post',
-// body: localStorage.getItem('user')
-// })
-// .then(res=>res.json())
-// .then(x=> dispatch(RefreshToDo(x)))
-
+})
+.then(res=>res.json())
+.then(x=> dispatch(RefreshToDo(x)))
 
     },
       DeleteItem: function(id) {
@@ -96,21 +78,11 @@ body:JSON.stringify(data)
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded'
   },
-  method: 'post',
+  method: 'delete',
   body:JSON.stringify(data)
- });
-
-       
- fetch('http://localhost:9000/ShowTopics', {
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  method: 'post',
-  body: localStorage.getItem('user')
  })
-.then(res=>res.json())
-.then(x=> dispatch(RefreshToDo(x)))
-
+ .then(res=>res.json())
+ .then(x=> dispatch(RefreshToDo(x)))
 
       },
       EditItem: function(id,data) {
@@ -125,37 +97,22 @@ body:JSON.stringify(data)
       let y=x.token;
       let data={"id" : id , "New_Name" : person , "token" : y}
 
-      // console.log(data)
-
-
-
       fetch('http://localhost:9000/UpdateTopics', {
     
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        method: 'post',
+        method: 'put',
         body: JSON.stringify(data)
-       });
-
-       fetch('http://localhost:9000/ShowTopics', {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        method: 'post',
-        body: localStorage.getItem('user')
        })
-      .then(res=>res.json())
-      .then(x=>  dispatch(RefreshToDo(x)))
+       .then(res=>res.json())
+       .then(x=>  dispatch(RefreshToDo(x)))
+
 
       }
       else{
 
-      }
-
-
-
-      }
+      }      }
   }
 }
 
