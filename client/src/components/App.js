@@ -22,7 +22,7 @@ class App extends PureComponent {
       <Router>
         <div>
           {this.props.loggedIn ? <Redirect to={{ pathname: "/MainPage" }} />
-            : <Redirect to={{ pathname: "/MainPage" }} />}
+            : <Redirect to={{ pathname: "/LandingPage" }} />}
         </div>
 
         <Switch>
