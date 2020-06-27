@@ -1,12 +1,14 @@
-export function LoginAction(){
-    return{
-type:"LoginAction"
-}}
+export function LoginAction() {
+    return {
+        type: "LoginAction"
+    }
+}
 
 
-export function LooutAction(){
-    return{
-type:"LogoutAction"
-}}
+export function LooutAction() {
+    return {
+        type: "LogoutAction"
+    }
+}
 
 

@@ -1,14 +1,14 @@
-function Reducer(state={loggedIn:localStorage.getItem('user')},action){
+function Reducer(state = { loggedIn: localStorage.getItem('user') }, action) {
 
-    switch(action.type){
+    switch (action.type) {
 
         case "LoginAction":
-            return {...state,loggedIn:localStorage.getItem('user')}
+            return { ...state, loggedIn: localStorage.getItem('user') }
 
-            case "LogOutAction":
-                return {...state,loggedIn:null}
+        case "LogOutAction":
+            return { ...state, loggedIn: null }
 
-                default : return state;
+        default: return state;
     }
 }
 export default Reducer;

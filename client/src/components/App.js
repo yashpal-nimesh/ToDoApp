@@ -4,41 +4,25 @@ import { LoginAction } from '../actions/LoginAction';
 import LandingPage from './landingPage';
 import MainPage from './MainPage';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect
-  } from "react-router-dom";
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import ListDetails from './ListDetails';
-class App extends PureComponent{
-    constructor(props) {
-super(props);
-this.state={}        
-    }
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
 
-    componentDidMount(){
-        console.log("App Mount");
-        // console.log("hello"+ this.props.loggedIn)
-        // console.log(localStorage.getItem('user'));
+  render() {
 
-
-
-            }
-    componentWillMount(){
-        console.log("App Unmount")
-
-    }
-  
-
-
-    render(){
-        // console.log(this.props.loggedIn)
-        
-return (   
-    <Router>
+    return (
+      <Router>
         <div>
-    {this.props.loggedIn? <Redirect to={{ pathname: "/MainPage"}}/> 
-    : <Redirect to={{ pathname: "/LandingPage"}}/>}
+          {this.props.loggedIn ? <Redirect to={{ pathname: "/MainPage" }} />
+            : <Redirect to={{ pathname: "/LandingPage" }} />}
         </div>
 
         <Switch>
@@ -52,25 +36,26 @@ return (
             <LandingPage />
           </Route>
           <Route path="/details">
-           <ListDetails/>
+            <ListDetails />
           </Route>
         </Switch>
-        </Router>
- 
-)
-}}
+      </Router>
 
-function mapStateToProps(state) {
-    return {loggedIn: state.LoginReducer.loggedIn};
+    )
   }
-
-  function mapActionToProps(dispatch) {
-    return {
-        doLogin: function() {
-            dispatch(LoginAction());
-        }
-    }
 }
 
-  
-  export default connect(mapStateToProps,mapActionToProps)(App);
+function mapStateToProps(state) {
+  return { loggedIn: state.LoginReducer.loggedIn };
+}
+
+function mapActionToProps(dispatch) {
+  return {
+    doLogin: function () {
+      dispatch(LoginAction());
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapActionToProps)(App);

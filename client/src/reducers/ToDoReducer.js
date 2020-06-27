@@ -1,20 +1,18 @@
-function Reducer(state={item:[]},action){
-    let NewItem=[];
-    let StateItem=state.item;
-    // console.log(state.item)
+function Reducer(state = { item: [] }, action) {
 
-    switch(action.type){
 
-            case "InitToDo":
-    
-                return {...state,item:action.payload}
+    switch (action.type) {
+
+        case "InitToDo":
+
+            return { ...state, item: action.payload }
 
 
         case "RefreshToDo":
-    
-            return {...state,item:action.payload}
 
-                default : return state;
+            return { ...state, item: action.payload }
+
+        default: return state;
     }
 }
 export default Reducer;
