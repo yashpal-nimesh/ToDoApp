@@ -7,11 +7,13 @@ class LandingPage extends PureComponent {
 
 
   responseGoogle = (response, props) => {
-    console.log("yashpal",response)
     if (!response || !response.accessToken) {
-      alert("Sorry, failed to login. Try again.");
+    console.log("response failed",response)
       return;
     }
+
+    console.log("response success",response)
+
 
     let user = {
       name: response.profileObj.name,
