@@ -7,6 +7,7 @@ class LandingPage extends PureComponent {
 
 
   responseGoogle = (response, props) => {
+    console.log("yashpal",response)
     if (!response || !response.accessToken) {
       alert("Sorry, failed to login. Try again.");
       return;
@@ -29,7 +30,7 @@ class LandingPage extends PureComponent {
         <a href className="navbar-brand">ToDo App</a>
         <form className="form-inline">
           <GoogleLogin
-            clientId="886252175319-pmhq5uqg4nu7l0v28g21g3387knl6ned.apps.googleusercontent.com"
+            clientId="91193785091-fm50j12l1k89pup7rerdtaghq3cmmkbc.apps.googleusercontent.com"
             buttonText="Login"
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}
