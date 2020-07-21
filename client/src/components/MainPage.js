@@ -3,6 +3,7 @@ import { LooutAction } from '../actions/LoginAction';
 import { RefreshToDo, InitToDo } from '../actions/ToDoAction';
 import { connect } from 'react-redux';
 import ListItems from './ListItems';
+import axios from 'axios';
 
 
 class MainPage extends PureComponent {
@@ -16,7 +17,7 @@ class MainPage extends PureComponent {
 
     }
     else {
-      fetch('http://localhost:9000/AddUsers', {
+      fetch('/add/AddUsers', {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -25,6 +26,10 @@ class MainPage extends PureComponent {
       })
         .then(res => res.json())
         .then(x => (this.props.InitToDoData(x)))
+
+        //     axios('add/ShowTopics')
+        // .then(res => res.data)
+        // .then(x => (console.log(x)))
 
     }
   }
@@ -99,7 +104,7 @@ function mapActionToProps(dispatch) {
           token: y,
           Topic_Details: ""
         })
-        fetch('http://localhost:9000/AddTopics', {
+        fetch('/add/AddTopics', {
 
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

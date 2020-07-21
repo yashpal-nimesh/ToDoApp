@@ -51,7 +51,8 @@ function mapActionToProps(dispatch) {
       let x = JSON.parse(localStorage.getItem("user"));
       let y = x.token;
       let data = { Topic_id: id, token: y, Topic_Details: value }
-      fetch('http://localhost:9000/UpdateDetails', {
+      //UpdateDetails
+      fetch('/add/UpdateDetails', {
 
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -67,7 +68,8 @@ function mapActionToProps(dispatch) {
       let x = JSON.parse(localStorage.getItem("user"));
       let y = x.token;
       let data = { Topic_id: id, token: y }
-      fetch('http://localhost:9000/DeleteTopics', {
+      //DeleteTopics
+      fetch('/delete/DeleteTopics', {
 
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -88,7 +90,7 @@ function mapActionToProps(dispatch) {
         let y = x.token;
         let data = { "id": id, "New_Name": person, "token": y }
 
-        fetch('http://localhost:9000/UpdateTopics', {
+        fetch('/update/UpdateTopics', {
 
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
